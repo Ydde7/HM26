@@ -1,0 +1,91 @@
+:root {
+    --sidebar-bg: #2f3136;
+    --item-hover: #393c43;
+    --text-main: #dcddde;
+    --text-muted: #8e9297;
+    --discord-blurple: #5865f2;
+    --er-red: #f04747;
+    --er-green: #43b581;
+}
+
+.hospital-sidebar {
+    width: 300px;
+    height: 100vh;
+    background-color: var(--sidebar-bg);
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #202225;
+}
+
+.section {
+    padding: 16px;
+    border-bottom: 1px solid #26272b;
+}
+
+.attendees { flex: 1; overflow-y: auto; }
+.checklist-area { flex: 1.5; overflow-y: auto; }
+.clinical-summary { flex: 1; background: #292b2f; }
+
+/* Search Bar */
+#patientSearch {
+    width: 100%;
+    background: #202225;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+/* List Headers (Like Discord Category Names) */
+.list-header {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin: 15px 0 8px 0;
+}
+
+/* Checklist Styling */
+.action-controls {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.btn-add, .btn-delete {
+    flex: 1;
+    cursor: pointer;
+    border: none;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    background: #4f545c;
+    color: white;
+}
+
+.btn-add:hover { background: var(--er-green); }
+.btn-delete:hover { background: var(--er-red); }
+
+.check-item {
+    display: block;
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--text-main);
+}
+
+/* Clinical Tags */
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.tag {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    background: #40444b;
+}
+
+.tag.injury { color: #ffaa00; border: 1px solid #ffaa00; }
+.tag.alert { background: var(--er-red); color: white; }

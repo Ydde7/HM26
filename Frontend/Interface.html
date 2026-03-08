@@ -1,0 +1,41 @@
+<aside class="hospital-sidebar">
+    <section class="section attendees">
+        <div class="search-container">
+            <input type="text" placeholder="Search Patients..." id="patientSearch">
+        </div>
+        <div class="list-header">ATTENDEES — 12</div>
+        <ul class="patient-list">
+            <li class="patient-item active">
+                <div class="status-indicator online"></div>
+                <span>John Doe (Bed 04)</span>
+            </li>
+            <li class="patient-item">
+                <div class="status-indicator busy"></div>
+                <span>Jane Smith (Triage)</span>
+            </li>
+        </ul>
+    </section>
+
+    <section class="section checklist-area">
+        <div class="list-header">REQUIRED ACTIONS</div>
+        <div class="action-controls">
+            <button onclick="addCheckbox()" class="btn-add">+ Add Task</button>
+            <button onclick="deleteChecked()" class="btn-delete">Clear Done</button>
+        </div>
+        <div id="checklistDisplay" class="checklist-container">
+            <label class="check-item">
+                <input type="checkbox"> Administer IV Fluids
+            </label>
+        </div>
+    </section>
+
+    <section class="section clinical-summary">
+        <div class="list-header">SYMPTOMS & INJURIES</div>
+        <div class="tag-container">
+            <span class="tag injury">Laceration (Left Arm)</span>
+            <span class="tag symptom">Acute Fever</span>
+            <span class="tag symptom">Nausea</span>
+            <span class="tag alert">BP: 140/90</span>
+        </div>
+    </section>
+</aside>

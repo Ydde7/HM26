@@ -11,6 +11,7 @@ api_key = os.getenv("API_KEY")
 client = genai.Client(api_key=api_key)
 
 CSV_FILENAME = "medical_data.csv"
+
 def save_to_csv(data):
     lines = data.strip().split('\n')
     
@@ -68,19 +69,40 @@ def form_to_csv_line(file):
 
     except Exception as e:
         return f"An error occurred: {str(e)}", "Failed to save."
+    
+MSTAT_css = """
+    .container { background-color: #36393f !important; color: #dcddde !important; }
+    .sidebar-panel { background-color: #2f3136 !important; padding: 15px !important; border-radius: 0 !important; }
+    .chat-window { background-color: #36393f !important; }
+    h3 { color: #8e9297 !important; text-transform: uppercase; font-size: 12px !important; }
+    """
 
-with gr.Blocks(theme=gr.themes.Soft()) as demo:
-    gr.Markdown("### 📄 MEDICAL PDF TO PERSISTENT CSV")
-
-    with gr.Row():
-        with gr.Column():
-            pdf_input = gr.File(label="Upload PDF", file_types=[".pdf"])
-            btn = gr.Button("Extract & Save Data", variant="primary")
+with gr.Blocks(theme=gr.themes.Base(), css=MSTAT_css) as demo:
+    with gr.Row(elem_classes="container"):
         
-        with gr.Column():
-            line_output = gr.Textbox(label="Current Extraction", lines=5)
-            status_output = gr.Label(label="File Status")
+        # 1. Left Sidebar: Patient List
+        with gr.Column(scale=1, elem_classes="sidebar-panel"):
+            gr.Markdown("### Attendees")
+            gr.Markdown("• **John Doe** (Bed 04)\n• **Jane Smith** (Triage)")
+            gr.Markdown("### Shift Stats")
+            gr.Label({"Critical": 1, "Stable": 5})
 
+        # 2. Middle: Discord Chat Window
+        with gr.Column(scale=3, elem_classes="chat-window"):
+            chatbot = gr.Chatbot(label="Clinical Communication", height=500)
+            msg = gr.Textbox(placeholder="Type message to team...")
+            msg.submit(lambda x: [["", x]], msg, chatbot)
+
+        # 3. Right Sidebar: PDF Extraction + Tasks
+        with gr.Column(scale=1, elem_classes="sidebar-panel"):
+            gr.Markdown("### PDF Extraction")
+            pdf_input = gr.File(label="Upload PDF")
+            btn = gr.Button("Extract & Save Data", variant="primary")
+            line_output = gr.Textbox(label="Last Extraction", lines=3)
+            status_output = gr.Label(label="File Status")
+            
+            gr.Markdown("### Required Actions")
+            checklist = gr.CheckboxGroup(["Administer IV", "Check Vitals", "Update Chart"], label="Tasks")
     btn.click(
         fn=form_to_csv_line, 
         inputs=pdf_input, 
